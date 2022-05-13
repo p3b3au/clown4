@@ -20,6 +20,7 @@ const routes = [
     name: 'PlanningBase',
     component: () => import('../views/PlanningBase.vue')
   },
+ 
 ]
 
 const router = new VueRouter({

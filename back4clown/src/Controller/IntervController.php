@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Interv;
-use App\Form\IntervType;
+use App\Form\Interv1Type;
 use App\Repository\IntervRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class IntervController extends AbstractController
     public function new(Request $request, IntervRepository $intervRepository): Response
     {
         $interv = new Interv();
-        $form = $this->createForm(IntervType::class, $interv);
+        $form = $this->createForm(Interv1Type::class, $interv);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class IntervController extends AbstractController
     #[Route('/{id}/edit', name: 'app_interv_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Interv $interv, IntervRepository $intervRepository): Response
     {
-        $form = $this->createForm(IntervType::class, $interv);
+        $form = $this->createForm(Interv1Type::class, $interv);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -9,7 +9,10 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Lieu</th>
                 <th>Dateheure</th>
+                <th>ClownA</th>
+                <th>ClownB</th>
                 <th>Statut</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +21,10 @@
         {% for interv in intervs %}
             <tr>
                 <td>{{ interv.id }}</td>
+                <td>{{ interv.lieu.lieu }}</td>
                 <td>{{ interv.dateheure ? interv.dateheure|date('Y-m-d') : '' }}</td>
+                <td>{{ interv.clownA.pseudo }}</td>
+                <td>{{ interv.clownB.pseudo }}</td>
                 <td>{{ interv.statut }}</td>
                 <td>
                     <a href="{{ path('app_interv_show', {'id': interv.id}) }}">show</a>

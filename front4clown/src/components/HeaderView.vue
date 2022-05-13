@@ -4,7 +4,9 @@
           <ul class='mymenu'>
              <li v-for="(menu,idx) in menuLinks" :key="idx"> 
                <router-link :to="{name:menu.routeName}">{{menu.label}}</router-link>
-             </li>      
+             </li>    
+             <li><a href="http://localhost:8787/lieu">Lieux</a></li>
+             <li><a href="http://localhost:8787/interv">Interv</a></li>
           </ul>
     </nav> 
       
