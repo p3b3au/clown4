@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Interv{% endblock %}
+
+{% block body %}
+    <h1>Edit Interv</h1>
+
+    {{ include('interv/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_interv_index') }}">back to list</a>
+
+    {{ include('interv/_delete_form.html.twig') }}
+{% endblock %}

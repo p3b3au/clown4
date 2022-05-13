@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interv index{% endblock %}
+
+{% block body %}
+    <h1>Interv index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Dateheure</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for interv in intervs %}
+            <tr>
+                <td>{{ interv.id }}</td>
+                <td>{{ interv.dateheure ? interv.dateheure|date('Y-m-d') : '' }}</td>
+                <td>{{ interv.statut }}</td>
+                <td>
+                    <a href="{{ path('app_interv_show', {'id': interv.id}) }}">show</a>
+                    <a href="{{ path('app_interv_edit', {'id': interv.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_interv_new') }}">Create new</a>
+{% endblock %}

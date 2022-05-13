@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interv{% endblock %}
+
+{% block body %}
+    <h1>Interv</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ interv.id }}</td>
+            </tr>
+            <tr>
+                <th>Dateheure</th>
+                <td>{{ interv.dateheure ? interv.dateheure|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ interv.statut }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_interv_index') }}">back to list</a>
+
+    <a href="{{ path('app_interv_edit', {'id': interv.id}) }}">edit</a>
+
+    {{ include('interv/_delete_form.html.twig') }}
+{% endblock %}

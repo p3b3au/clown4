@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clown{% endblock %}
+
+{% block body %}
+    <h1>Clown</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ clown.id }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ clown.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{{ clown.actif ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Homme</th>
+                <td>{{ clown.homme ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Musicien</th>
+                <td>{{ clown.musicien ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Couleur</th>
+                <td>{{ clown.couleur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_clown_index') }}">back to list</a>
+
+    <a href="{{ path('app_clown_edit', {'id': clown.id}) }}">edit</a>
+
+    {{ include('clown/_delete_form.html.twig') }}
+{% endblock %}

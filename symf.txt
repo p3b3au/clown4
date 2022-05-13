@@ -1,0 +1,15 @@
+symfony new tp0  --version=5.4
+	=> allez dans le dossier créé!
+composer require --dev symfony/profiler-pack
+composer require annotations
+composer require twig
+composer require maker
+composer require orm
+
+
+
+=> dans env. :     DATABASE_URL="mysql://root:@127.0.0.1:3306/test_symfony?serverVersion=5.7&charset=utf8mb4"
+symfony console doctrine:database:create   = ça va créer ddb 'test_symfony'
+
+symfony console make:entity
+symfony console doctrine:schema:update -f  => tout est modifiable dans les entetes de chaqure entity

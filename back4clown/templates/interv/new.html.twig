@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Interv{% endblock %}
+
+{% block body %}
+    <h1>Create new Interv</h1>
+
+    {{ include('interv/_form.html.twig') }}
+
+    <a href="{{ path('app_interv_index') }}">back to list</a>
+{% endblock %}
