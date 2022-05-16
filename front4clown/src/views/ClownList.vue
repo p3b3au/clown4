@@ -49,7 +49,7 @@ export default {
 
         isMan(clown) {
             let sex = ''
-            if (clown.homme == 1) {
+            if (clown.homme == true) {
                 sex = "🧔"
             } else {
                 sex = "👩‍🦰"
@@ -60,7 +60,7 @@ export default {
 
         isMusician(clown) {
             let music = ''
-            if (clown.musicien == 1) {
+            if (clown.musicien == true) {
                 music = "🎵"
             } else {
                 music = ""

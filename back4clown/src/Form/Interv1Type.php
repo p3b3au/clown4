@@ -25,7 +25,7 @@ class Interv1Type extends AbstractType
                 'choice_label' => function ($clown) {
                     return $clown->getPseudo();
                 },
-                'label' => 'clown'
+                'label' => 'clownA'
 
             ])
             ->add('clownB', EntityType::class, [
@@ -33,7 +33,7 @@ class Interv1Type extends AbstractType
                 'choice_label' => function ($clown) {
                     return $clown->getPseudo();
                 },
-                'label' => 'clown'
+                'label' => 'clownB'
 
             ])
             ->add('lieu', EntityType::class, [

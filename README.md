@@ -20,8 +20,8 @@ DATABASE_URL="mysql://root:@127.0.0.1:3306/clown4?serverVersion=5.7&charset=utf8
 créer ddb 'clown4':
 symfony console doctrine:database:create
 
-s'assurer que c'est la dernière versio:
-migrations:execute --up 'DoctrineMigrations\Version20220516070956'
+créer le scema des tables dans la bdd:
+symfony console doctrine:schema:update -f
 
 ajouter les données en executant ce qu'il y a dans le dossier clown4.sql
 
