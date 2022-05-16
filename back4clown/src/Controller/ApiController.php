@@ -37,7 +37,7 @@ class ApiController extends AbstractController
                'id' => $product->getId(),
                'pseudo' => $product->getPseudo(),
                'actif' => $product->isActif(),
-               'sexeHomme' => $product->isHomme(),
+               'homme' => $product->isHomme(),
                'musicien' => $product->isMusicien(),
                'couleur' => $product->getCouleur(),
                         ];
