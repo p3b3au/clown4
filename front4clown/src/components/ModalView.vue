@@ -35,7 +35,7 @@
 </template>
 <script>
 import axios from 'axios'
-const FIND_BUDDY_API_URL = "http://localhost:8787/api/findBuddy2.php"
+const FIND_BUDDY_API_URL = "http://localhost:8787/api/findBuddy"
 
 export default {
     name: "ModalView",

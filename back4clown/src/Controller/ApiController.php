@@ -77,8 +77,39 @@ class ApiController extends AbstractController
    
         return $this->json($data);
     }
+
     
-    
+  /*  #[Route('/findBuddy', name: 'findBuddy')]
+    public function findBuddy(): Response
+    {
+        header("Access-Control-Allow-Methods: PUT");
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: *");
+        header("Content-Type: application/json");
+
+             $products = $this->getDoctrine()
+            ->getRepository(Interv::class)
+            ->findAll();
+      
+        $data = [];
+ 
+
+        
+        foreach ($products as $product) {
+            $data[] = [
+               'id' => $product->getId(),
+               'dateheure' => $product->getDateheure(),
+               'clownA' => $product->getApiClownA(),
+               'clownB' => $product->getApiClownB(),
+               'lieu_id' => $product->getApiLieu(),
+               'statut' => $product->getStatut(),
+           ];
+        }
+        
+      
+   
+        return $this->json($data);
+    }*/
 }
 
     
