@@ -1,10 +1,6 @@
 
 use clown4;
 
-
-
-
-
 insert into clown values ("0","bertille", "1", "0", "1","#9DC953"),
 ("0","diva", "1", "0", "0","#EBC2E6"),
 ("0","frotti", "1", "1", "0","#A87438"),
@@ -22,35 +18,12 @@ insert into clown values ("0","bertille", "1", "0", "1","#9DC953"),
 ("0","zoe", "1", "0", "1","#D79288");
 
 
-drop table lieu;
-#Table lieux
-create table lieu(
-id int PRIMARY KEY AUTO_INCREMENT  NOT NULL unique,
-nomLieu VARCHAR(50) NOT NULL unique
-);
 
-insert into lieu (nomLieu) values ('AAAA'), ('BBBB'), ('CCCC'), ('DDDD'), ('EEEE'), ('FFFF'), ('GGGG'), ('HHHH'), ('IIII'), ('JJJJ');
-
-
-drop table intervention;
-#Table interventions
-create table intervention(
-id int PRIMARY KEY AUTO_INCREMENT  NOT NULL unique,
-dateHeure DATETIME NOT NULL DEFAULT now(),
-id_comedien1 int not null,
-CONSTRAINT FK_id_comedien1 FOREIGN KEY (id_comedien1) REFERENCES comedien(id),
-id_comedien2 int not null,
-CONSTRAINT FK_id_comedien2 FOREIGN KEY (id_comedien2) REFERENCES comedien(id),
-id_lieu int not null,
-CONSTRAINT FK_id_lieu FOREIGN KEY (id_lieu) REFERENCES lieu(id),
-statut int not null default 0
-);
+insert into lieu (lieu) values ('AAAA'), ('BBBB'), ('CCCC'), ('DDDD'), ('EEEE'), ('FFFF'), ('GGGG'), ('HHHH'), ('IIII'), ('JJJJ');
 
 
 
-
-
-INSERT INTO `intervention` (`dateHeure`,`id_comedien1`,`id_comedien2`,`id_lieu`,`statut`)
+INSERT INTO `interv` (`dateheure`,`clown_a_id`,`clown_b_id`,`lieu_id`,`statut`)
 VALUES
   ("2022/02/04",4,12,4,1),
   ("2022/01/19",8,14,6,1),
@@ -77,7 +50,7 @@ VALUES
   ("2021/07/15",11,14,8,2),
   ("2021/06/06",13,3,1,1),
   ("2022/01/13",3,7,10,1);
-INSERT INTO `intervention` (`dateHeure`,`id_comedien1`,`id_comedien2`,`id_lieu`,`statut`)
+INSERT INTO `interv` (`dateheure`,`clown_a_id`,`clown_b_id`,`lieu_id`,`statut`)
 VALUES
   ("2022/03/29",6,9,9,2),
   ("2022/03/25",14,10,2,0),
@@ -104,7 +77,7 @@ VALUES
   ("2021/12/18",4,10,4,1),
   ("2021/08/12",13,4,2,1),
   ("2022/03/18",6,1,10,1);
-INSERT INTO `intervention` (`dateHeure`,`id_comedien1`,`id_comedien2`,`id_lieu`,`statut`)
+INSERT INTO `interv` (`dateheure`,`clown_a_id`,`clown_b_id`,`lieu_id`,`statut`)
 VALUES
   ("2021/11/03",8,14,4,1),
   ("2022/02/27",8,10,4,1),
@@ -131,7 +104,7 @@ VALUES
   ("2021/11/21",11,1,4,2),
   ("2021/12/28",11,6,2,1),
   ("2021/12/14",4,10,5,1);
-INSERT INTO `intervention` (`dateHeure`,`id_comedien1`,`id_comedien2`,`id_lieu`,`statut`)
+INSERT INTO `interv` (`dateheure`,`clown_a_id`,`clown_b_id`,`lieu_id`,`statut`)
 VALUES
   ("2021/12/06",7,12,6,1),
   ("2022/01/03",14,3,8,1),
@@ -159,5 +132,3 @@ VALUES
   ("2022/04/05",5,14,1,2),
   ("2022/04/15",10,14,4,1);
 
-
-TRUNCATE TABLE intervention;

@@ -11,5 +11,21 @@ composer require orm
 => dans env. :     DATABASE_URL="mysql://root:@127.0.0.1:3306/test_symfony?serverVersion=5.7&charset=utf8mb4"
 symfony console doctrine:database:create   = ça va créer ddb 'test_symfony'
 
+BDD
 symfony console make:entity
-symfony console doctrine:schema:update -f  => tout est modifiable dans les entetes de chaqure entity
+symfony console doctrine:schema:update -f  => tout est modifiable dans les entetes de chaque entity
+
+DONNEES
+composer require --dev orm-fixtures
+il faut créer à la main de fichier MachinFixture.php où on rentre les données puis, ,pour les envoyer à la ddb:
+symfony console doctrine:fixtures:load 
+
+MIGRATION
+migrer vers une autre version de ta bdd:
+symfony console doctrine:migrations:migrate
+créer une "sauvegarde" dans "version xxxxxx":
+php bin/console make:migration
+
+CRUD
+composer require form validator security-csrf
+php bin/console make:crud
