@@ -73,8 +73,7 @@ class ApiController extends AbstractController
            ];
         }
         
-      
-   
+         
         return $this->json($data);
     }
 

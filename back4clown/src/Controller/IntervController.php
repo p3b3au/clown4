@@ -15,7 +15,7 @@ class IntervController extends AbstractController
 {
     #[Route('/', name: 'app_interv_index', methods: ['GET'])]
     public function index(IntervRepository $intervRepository): Response
-    {
+    { //dd( $intervRepository->findAll());
         return $this->render('interv/index.html.twig', [
             'intervs' => $intervRepository->findAll(),
         ]);

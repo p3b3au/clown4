@@ -25,6 +25,9 @@
     transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
     color:black;
+    overflow: hidden;
+    height: 100vh;
+   
   }
   
   .modal-header h3 {
@@ -36,10 +39,17 @@
     margin: 20px 0;
   }
   
+  body.modal-open {
+    overflow: hidden;
+    height: 100vh;
+  }
+
   .modal-default-button {
     float: right;
   }
   
+
+
   /*
    * The following styles are auto-applied to elements with
    * transition="modal" when their visibility is toggled

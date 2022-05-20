@@ -5,49 +5,56 @@
         <h3 slot="header">custom header</h3>
 
 
-        <thead>
-            <!--<tr>
-                <th>pseudo</th>
-                <th>sexeHomme</th>
-                <th>musicien</th>
-                
-                <th>img</th>
-             <th colspan="2" style="cursor :pointer">
-                    <router-link :to="'AdminNew'">New</router-link></th> 
-            </tr> -->
-        </thead>
-        <tbody>
-            <th class="course" v-for="interv in intervs" :Key="interv.id">
-              
-                <td class="course-info">
-                    <h3>le {{ left(interv.dateheure) }}</h3>
-                    <h3>à {{ interv.lieu_id[1] }}</h3><br>
-                    <br>
-                    
-                </td>
-              <tr class="cartouche" :style="{ backgroundColor: interv.clownA[5] }" id="show-modal" style="cursor :pointer" @click="showModal = true ; giveId(interv.id); giveLieu(interv.id_lieu)">
-                <td><img class="img" :src="require(`@/assets/static/img/${interv.clownA[1]}.jpg`)" /></td>
-                <td class="cartouche-info">
-                    <h3>{{interv.clownA[1]}}</h3>
-                </td>
-                <td class="cartouche-info">{{ isMan(interv.clownA[3]) }}</td>
-                <td class="cartouche-info">{{ isMusician(interv.clownA[4]) }}</td>
-                </tr>
-                <tr class="cartouche" :style="{ backgroundColor: interv.clownB[5] }" id="show-modal" style="cursor :pointer" @click="showModal = true ; giveId(interv.id); giveLieu(interv.id_lieu)">
-                <td><img class="img" :src="require(`@/assets/static/img/${interv.clownB[1]}.jpg`)" /></td>
-                <td class="cartouche-info">
-                    <h3>{{interv.clownB[1]}}</h3>
-                </td>
-                <td class="cartouche-info" >{{ isMan(interv.clownB[3]) }}</td>
-                <td class="cartouche-info">{{ isMusician(interv.clownB[4]) }}</td>
-                </tr>-->
-                
-                <td id="show-modal" style="cursor :pointer" @click="showModal = true ; giveId(interv.id); giveLieu(interv.id_lieu)">💬</td>
-                <!-- <td style="cursor :pointer" @click="goToFilmDelete(movie.id)">🗑</td>-->
-            </th>
-        </tbody>
-    </table>
+<div class="container" style="color:black">
+	<div class="header">
+        <h2>editer les interv</h2>
+        {{clownA_Post}}
+        {{clownB_Post[1]}}
+	</div>
+	<form id="form" class="form" v-for="interv in intervs" :Key="interv.id">
+		<div class="form-control">
+			{{interv.dateheure}}
+		</div>
+		<div style="color:black">Selected: {{ clownA_Post[interv.id]}}</div>
+                <select class="custom-select" v-model="clownA_Post[interv.id]" :id="interv.clownA">
+                <option class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
+                   <span :style="{ backgroundColor: clown.couleur}">  <img :src="displayPic(clown.pseudo)"/>
+                    {{ clown.pseudo }}
+                    {{ isMan(clown.homme) }}
+                    {{ isMusician(clown.musicien) }}</span>
+                  
+                  
+                </option>
+                </select>
+		<div style="color:black">Selected: {{ clownB_Post[interv.id] }}</div>
+                <select class="custom-select" v-model="clownB_Post[interv.id]" :id="interv.clownB">
+                <option class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
+                   <span :style="{ backgroundColor: clown.couleur}">  <img :src="displayPic(clown.pseudo)"/>
+                    {{ clown.pseudo }}
+                    {{ isMan(clown.homme) }}
+                    {{ isMusician(clown.musicien) }}</span>
+                  
+                </option>
+                </select>
+                <br>
+				<input type="submit" value="submit" :name="interv.id.AB">
+               <span> {{interv.id}}</span>
+               
+               <br><br>
+	</form>
+    <br>
+  
+ <br><br>
+</div>
 
+
+
+
+       </table>
+
+    
+
+           
 </template>
 
 <script>
@@ -55,7 +62,7 @@
 import ModalView from '@/components/ModalView.vue'
 import axios from 'axios'
 const ALL_INTERVS_READ_API_URL = "http://localhost:8787/api/allInterv"
-
+const ALL_CLOWNS_READ_API_URL = "http://localhost:8787/api/allClown"
 
 export default {
     name: 'PlanningBase',
@@ -68,14 +75,18 @@ export default {
         clown_id: '',
         clown_pseudo:'',
         intervs:[],
-        
+        clownA_Post: {},
+        clownB_Post: {},
+
+    
+
     }),
-
     methods: {
-      displayClown(clo){
-           return this.interv+`App`+"\n"+"Entity"+"\n"+" "+clo 
-        },
 
+
+       displayPic(clo) {
+      return require(`@/assets/static/img/${clo}.jpg`);
+    },
         isMan(clown) {
             let sex = ''
             if (clown == 1) {
@@ -107,7 +118,11 @@ export default {
             return date.substring(0,10)
         }
 
+
     },
+        
+
+    
   
 
  
@@ -118,9 +133,9 @@ export default {
         console.log(this.intervs)
  
         
-       /* const clownsdb = await axios.get(ALL_CLOWNS_READ_API_URL)
+       const clownsdb = await axios.get(ALL_CLOWNS_READ_API_URL)
         this.clowns = clownsdb.data
-        console.log(this.clowns)*/
+        console.log(this.clowns)
         
     },
 
@@ -152,7 +167,7 @@ border-radius: 50px;
 
 .styled-table thead  {
     background-color: #009879;
-    color: #ffffff;
+   
 }
 
 
@@ -189,14 +204,6 @@ border-radius: 50px;
     height: 150px;
 }
 
-.course-preview {
-    color: #fff;
-    display: inline-block;
-    font-size: 12px;
-    opacity: 0.6;
-    margin-top: 30px;
-    text-decoration: none;
-}
 
 .course-info {
     

@@ -20,7 +20,16 @@ const routes = [
     name: 'PlanningBase',
     component: () => import('../views/PlanningBase.vue')
   },
- 
+  {
+    path: '/PlanningTest',
+    name: 'PlanningTest',
+    component: () => import('../views/PlanningTest.vue')
+  },
+  {
+    path: '/EditTest',
+    name: 'EditTest',
+    component: () => import('../views/EditTest.vue')
+  },
 ]
 
 const router = new VueRouter({

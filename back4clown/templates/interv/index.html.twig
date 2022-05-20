@@ -23,8 +23,8 @@
                 <td>{{ interv.id }}</td>
                 <td>{{ interv.lieu.lieu }}</td>
                 <td>{{ interv.dateheure ? interv.dateheure|date('Y-m-d') : '' }}</td>
-                <td>{{ interv.clownA.pseudo }}</td>
-                <td>{{ interv.clownB.pseudo }}</td>
+               {% if interv.clownA.pseudo is defined %} <td> {{ interv.clownA.pseudo }} </td> {% else %} <td> à definir </td> {% endif %}
+                {% if interv.clownB.pseudo is defined %} <td> {{ interv.clownB.pseudo }} </td> {% else %} <td> à definir </td> {% endif %}
                 <td>{{ interv.statut }}</td>
                 <td>
                     <a href="{{ path('app_interv_show', {'id': interv.id}) }}">show</a>

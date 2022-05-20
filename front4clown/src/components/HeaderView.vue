@@ -30,9 +30,17 @@ export default{
         },    
         {
           routeName:'PlanningBase',
-          label:"Planning"
+          label:"Voir Planning"
         },    
-                     
+        {
+          routeName:'PlanningTest',
+          label:"Editer PlanningTest"
+        },
+             
+             {
+          routeName:'EditTest',
+          label:"EditTest"
+        },
       ]
     })
 }

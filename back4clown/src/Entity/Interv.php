@@ -60,7 +60,7 @@ class Interv
      */
     public function getClownA(): ?Clown
     {
-        return $this->clownA;
+        return $this->clown;
     }
 
     public function getApiClownA()
