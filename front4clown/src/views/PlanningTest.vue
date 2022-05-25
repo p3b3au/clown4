@@ -1,7 +1,18 @@
 <template>
     <table class="styled-table">
-        <ModalView v-if="showModal" @close="showModal = false" :clownId='clown_id' :clownPseudo='clown_pseudo'/>
-
+        <ModalViewA v-if="showModalA" @close="showModalA = false" 
+        :intervId = 'interv_id'
+        :clownId= 'clown_id' 
+        :clownPseudo='clown_pseudo'
+        @showSelectedClownA="handleClownSelectedA"
+        />
+        
+        <ModalViewB v-if="showModalB" @close="showModalB = false" 
+        :intervId = 'interv_id'
+        :clownId= 'clown_id' 
+        :clownPseudo='clown_pseudo'
+        @showSelectedClownB="handleClownSelectedB"
+        />
         <h3 slot="header">custom header</h3>
 
 
@@ -23,31 +34,18 @@
                     <h3>le {{ left(interv.dateheure) }}</h3>
                     <h3>à {{ interv.lieu_id[1] }}</h3><br>
                     <br>
-                    
                 </td>
-                <div style="color:black">Selected: {{ selected }}</div>
-                <select class="custom-select" v-model="selected">
-                
-                <option class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
-                   <span :style="{ backgroundColor: clown.couleur}">  <img :src="displayPic(clown.pseudo)"/>
-                    {{ clown.pseudo }}
-                    {{ isMan(clown) }}
-                    {{ isMusician(clown) }}</span>
-                  
-                </option>
-                </select>
+
+<div style="color:black">Selected: {{ clownA_Post[interv.id] }}</div>
+<div id="show-modal" style="cursor :pointer" @click="showModalA = true ; giveIntervId(interv.id);">💬</div>
+  
+  
+               
               
-                <tr class="cartouche" :style="{ backgroundColor: interv.clownB[5] }" id="show-modal" style="cursor :pointer" @click="showModal = true">
-                <td><img class="img" :src="require(`@/assets/static/img/${interv.clownB[1]}.jpg`)" /></td>
-                <td class="cartouche-info">
-                    <h3>{{interv.clownB[1]}}</h3>
-                </td>
-                <td class="cartouche-info" >{{ isMan(interv.clownB[3]) }}</td>
-                <td class="cartouche-info">{{ isMusician(interv.clownB[4]) }}</td>
-                </tr>-->
+            <div style="color:black">Selected: {{ clownB_Post[interv.id] }}</div>
+<div id="show-modal" style="cursor :pointer" @click="showModalB = true ; giveIntervId(interv.id);">💬</div>
+  
                 
-                
-                <!-- <td style="cursor :pointer" @click="goToFilmDelete(movie.id)">🗑</td>-->
             </th>
         </tbody>
     </table>
@@ -55,7 +53,9 @@
 </template>
 
 <script>
-import ModalView from "@/components/ModalViewTest.vue";
+// import ClownCard from '@/components/ClownCard.vue';
+import ModalViewA from "@/components/ModalViewA.vue";
+import ModalViewB from "@/components/ModalViewB.vue";
 import axios from "axios";
 const ALL_INTERVS_READ_API_URL = "http://localhost:8787/api/allInterv";
 const ALL_CLOWNS_READ_API_URL = "http://localhost:8787/api/allClown";
@@ -63,15 +63,24 @@ const ALL_CLOWNS_READ_API_URL = "http://localhost:8787/api/allClown";
 export default {
   name: "PlanningBase",
   components: {
-    ModalView,
+    ModalViewA,
+    ModalViewB,
+
+    // ClownCard,
   },
   data: () => ({
-    showModal: false,
+    showModalA: false,
+    showModalB: false,
+
     clowns: [],
     clown_id: "",
+    interv_id: "",
     clown_pseudo: "",
     intervs: [],
-    selected: "",
+    clownA_Post: {},
+    clownB_Post: {},
+    selectedClown: "",
+    intervIdRetour: "",
   }),
 
   methods: {
@@ -81,7 +90,7 @@ export default {
 
     isMan(clown) {
       let sex = "";
-      if (clown.homme == true) {
+      if (clown == 1) {
         sex = "🧔";
       } else {
         sex = "👩‍🦰";
@@ -91,7 +100,7 @@ export default {
 
     isMusician(clown) {
       let music = "";
-      if (clown.musicien == true) {
+      if (clown == 1) {
         music = "🎵";
       } else {
         music = "";
@@ -99,14 +108,29 @@ export default {
       return music;
     },
 
-    giveId(id) {
+    giveIntervId(id) {
       this.interv_id = id;
+      console.log(id);
     },
-    giveLieu(lieu) {
-      this.interv.id_lieu = lieu;
-    },
+
     left(date) {
       return date.substring(0, 10);
+    },
+
+    handleClownSelectedA(payload2, intervIdRetour) {
+      console.log(payload2, intervIdRetour);
+      // object destructuring car pourquoi pas?
+      // je met à jour la data locale "selectedCourse"
+      this.clownA_Post[intervIdRetour] = this.clowns[payload2 - 1].pseudo;
+      
+    },
+
+    handleClownSelectedB(payload2, intervIdRetour) {
+      console.log(payload2, intervIdRetour);
+      // object destructuring car pourquoi pas?
+
+      // je met à jour la data locale "selectedCourse"
+      this.clownB_Post[intervIdRetour] = this.clowns[payload2 - 1].pseudo;
     },
   },
 

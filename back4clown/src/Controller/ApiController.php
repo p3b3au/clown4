@@ -78,7 +78,7 @@ class ApiController extends AbstractController
     }
 
     
-  /*  #[Route('/findBuddy', name: 'findBuddy')]
+   #[Route('/findBuddy', name: 'findBuddy')]
     public function findBuddy(): Response
     {
         header("Access-Control-Allow-Methods: PUT");
@@ -95,20 +95,22 @@ class ApiController extends AbstractController
 
         
         foreach ($products as $product) {
-            $data[] = [
-               'id' => $product->getId(),
-               'dateheure' => $product->getDateheure(),
-               'clownA' => $product->getApiClownA(),
-               'clownB' => $product->getApiClownB(),
-               'lieu_id' => $product->getApiLieu(),
-               'statut' => $product->getStatut(),
-           ];
+            foreach ($products as $product) {
+                $data[] = [
+                   'id' => $product->getId(),
+                   'pseudo' => $product->getPseudo(),
+                   'actif' => $product->isActif(),
+                   'homme' => $product->isHomme(),
+                   'musicien' => $product->isMusicien(),
+                   'couleur' => $product->getCouleur(),
+                            ];
+            }
         }
         
       
    
         return $this->json($data);
-    }*/
+    }
 }
 
     

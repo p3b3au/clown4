@@ -8,19 +8,27 @@
 <div class="container" style="color:black">
 	<div class="header">
         <h2>editer les interv</h2>
-        {{clownA_Post}}
-        {{clownB_Post[1]}}
+        {{clownA_Post}} <br>
+        {{clownB_Post}} <br>
+        <button>valider le planning</button><hr>
 	</div>
+    <br>
 	<form id="form" class="form" v-for="interv in intervs" :Key="interv.id">
 		<div class="form-control">
-			{{interv.dateheure}}
+			{{interv.dateheure}}  <span> / interv.id = {{interv.id}}</span>
 		</div>
+
+        
+
+
+
+
 		<div style="color:black">Selected: {{ clownA_Post[interv.id]}}</div>
-                <select class="custom-select" v-model="clownA_Post[interv.id]" :id="interv.clownA">
+                <select class="custom-select" v-model="clownA_Post[interv.id]" :id="interv.clownA" @change="giveId(clown.id)">
                 <option class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
                    <span :style="{ backgroundColor: clown.couleur}">  <img :src="displayPic(clown.pseudo)"/>
                     {{ clown.pseudo }}
-                    {{ isMan(clown.homme) }}
+                    {{ isMan(clown.homme) }} 
                     {{ isMusician(clown.musicien) }}</span>
                   
                   
@@ -28,20 +36,20 @@
                 </select>
 		<div style="color:black">Selected: {{ clownB_Post[interv.id] }}</div>
                 <select class="custom-select" v-model="clownB_Post[interv.id]" :id="interv.clownB">
-                <option class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
-                   <span :style="{ backgroundColor: clown.couleur}">  <img :src="displayPic(clown.pseudo)"/>
-                    {{ clown.pseudo }}
-                    {{ isMan(clown.homme) }}
-                    {{ isMusician(clown.musicien) }}</span>
+                <option class="cartouche" v-for="buddy in buddys" :key="buddy.id" :style="{ backgroundColor: buddy.couleur }">
+                   <span :style="{ backgroundColor: buddy.couleur}">  <img :src="displayPic(buddy.pseudo)"/>
+                    {{ buddy.pseudo }}
+                    {{ isMan(buddy.homme) }}
+                    {{ isMusician(buddy.musicien) }}</span>
                   
                 </option>
                 </select>
-                <br>
-				<input type="submit" value="submit" :name="interv.id.AB">
-               <span> {{interv.id}}</span>
+                
                
-               <br><br>
+               
+               <br><br><br>
 	</form>
+    
     <br>
   
  <br><br>
@@ -63,6 +71,7 @@ import ModalView from '@/components/ModalView.vue'
 import axios from 'axios'
 const ALL_INTERVS_READ_API_URL = "http://localhost:8787/api/allInterv"
 const ALL_CLOWNS_READ_API_URL = "http://localhost:8787/api/allClown"
+const FIND_BUDDY_READ_API_URL = "http://localhost:8787/api/findBuddy"
 
 export default {
     name: 'PlanningBase',
@@ -77,6 +86,7 @@ export default {
         intervs:[],
         clownA_Post: {},
         clownB_Post: {},
+        buddys: [],
 
     
 
@@ -136,6 +146,11 @@ export default {
        const clownsdb = await axios.get(ALL_CLOWNS_READ_API_URL)
         this.clowns = clownsdb.data
         console.log(this.clowns)
+
+        let id = this.clownId
+        const buddydb = await axios.post(FIND_BUDDY_READ_API_URL,id)
+        this.buddys = buddydb.data
+        console.log(this.buddys)
         
     },
 
