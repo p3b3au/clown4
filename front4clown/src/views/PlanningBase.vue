@@ -2,7 +2,7 @@
     <table class="styled-table">
         <ModalView v-if="showModal" @close="showModal = false" :clownId='clown_id' :clownPseudo='clown_pseudo'/>
 
-        <h3 slot="header">custom header</h3>
+        <h3 slot="header">planning rentré</h3>
 
 
         <thead>
@@ -40,10 +40,10 @@
                 </td>
                 <td class="cartouche-info" >{{ isMan(interv.clownB[3]) }}</td>
                 <td class="cartouche-info">{{ isMusician(interv.clownB[4]) }}</td>
-                </tr>-->
+                </tr>
                 
                 <td id="show-modal" style="cursor :pointer" @click="showModal = true ; giveId(interv.id); giveLieu(interv.id_lieu)">💬</td>
-                <!-- <td style="cursor :pointer" @click="goToFilmDelete(movie.id)">🗑</td>-->
+           
             </th>
         </tbody>
     </table>

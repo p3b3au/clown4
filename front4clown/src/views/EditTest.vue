@@ -2,7 +2,7 @@
     <table class="styled-table">
         <ModalView v-if="showModal" @close="showModal = false" :clownId='clown_id' :clownPseudo='clown_pseudo'/>
 
-        <h3 slot="header">custom header</h3>
+     
 
 
 <div class="container" style="color:black">
@@ -15,13 +15,14 @@
     <br>
 	<form id="form" class="form" v-for="interv in intervs" :Key="interv.id">
 		<div class="form-control">
-			{{interv.dateheure}}  <span> / interv.id = {{interv.id}} {{degeu(interv.id)}}</span>
+			{{left(interv.dateheure)}}  <span> / interv.id = {{interv.id}}</span>
+         
 		</div>
        
 
 		<div style="color:black">Selected: {{ clownA_Post[interv.id]}}</div>
                 <select class="custom-select" v-model="clownA_Post[interv.id]" :id="interv.clownA" @change="findBuddy(clownA_Post[interv.id])">
-                <option class="cartouche" v-for="clown in clownFs" :key="clown.id" :style="{ backgroundColor: clown.couleur }" :value="clown.id">
+                <option class="cartouche" v-for="clown in interv.dispo" :key="clown.id" :style="{ backgroundColor: clown.couleur }" :value="clown">
                    <span>  <img :src="displayPic(clown.pseudo)"/>
                     {{ clown.pseudo }}
                     {{ isMan(clown.homme) }} 
@@ -32,7 +33,7 @@
                 </select>
 		<div style="color:black">Selected: {{ clownB_Post[interv.id] }}</div>
                 <select class="custom-select" v-model="clownB_Post[interv.id]" :id="interv.clownB">
-                <option class="cartouche" v-for="buddy in buddys" :key="buddy.id" :style="{ backgroundColor: buddy.couleur }" :value="buddy.id">
+                <option class="cartouche" v-for="buddy in buddys" :key="buddy.id" :style="{ backgroundColor: buddy.couleur }" :value="buddy">
                    <span>  <img :src="displayPic(buddy.pseudo)"/>
                     {{ buddy.pseudo }}
                     {{ isMan(buddy.homme) }}
@@ -124,9 +125,10 @@ export default {
             return date.substring(0,10)
         },
         findBuddy(param){
-            let bud = this.clowns.filter((clown) => clown.id == param)
-            let buddy = bud[0]
-            console.log(buddy)
+            
+           // let bud = this.clowns.filter((clown) => clown.id == param)
+            let buddy = param
+            
             if (buddy.homme == true && buddy.musicien == false){
                this.buddys = this.clowns.filter((clown) => clown.homme == false && clown.musicien == true)}
             if (buddy.homme == false && buddy.musicien == false){
@@ -136,32 +138,37 @@ export default {
                this.buddys = this.clowns.filter((clown) => clown.homme == false)}else{
                this.buddys = this.clowns.filter((clown) => clown.homme == true)}}
            
+        },
         
-            
-            console.log(this.buddys)
-        }
-        ,
-        degeu(param){
-            if (param == 2){
+
+     //  computed: {
+           filtredClowns(int){     
+            if (int < 2){
                 this.clownFs = this.clowns.filter((clown) => clown.id>3)
-            // }
             }else{
                 this.clownFs=this.clowns
             }
-        }
-    },
-
+               return this.clownFs
+       }
+        },
+    
  
     async created() {
 
-        const intervdb = await axios.get(ALL_INTERVS_READ_API_URL)
-        this.intervs = intervdb.data
-        console.log(this.intervs)
+        
  
+        
         
        const clownsdb = await axios.get(ALL_CLOWNS_READ_API_URL)
         this.clowns = clownsdb.data
         console.log(this.clowns)
+
+        const intervdb = await axios.get(ALL_INTERVS_READ_API_URL)
+        this.intervs = intervdb.data
+        for (let i=0; i<this.intervs.length; i++){
+        this.intervs[i].dispo = this.clowns}
+        console.log(this.intervs)
+
 
         // let id = this.clownId
         // const buddydb = await axios.post(FIND_BUDDY_READ_API_URL,id)
