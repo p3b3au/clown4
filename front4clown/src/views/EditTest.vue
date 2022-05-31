@@ -15,18 +15,14 @@
     <br>
 	<form id="form" class="form" v-for="interv in intervs" :Key="interv.id">
 		<div class="form-control">
-			{{interv.dateheure}}  <span> / interv.id = {{interv.id}}</span>
+			{{interv.dateheure}}  <span> / interv.id = {{interv.id}} {{degeu(interv.id)}}</span>
 		</div>
-
-        
-
-
-
+       
 
 		<div style="color:black">Selected: {{ clownA_Post[interv.id]}}</div>
-                <select class="custom-select" v-model="clownA_Post[interv.id]" :id="interv.clownA" @change="giveId(clown.id)">
-                <option class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
-                   <span :style="{ backgroundColor: clown.couleur}">  <img :src="displayPic(clown.pseudo)"/>
+                <select class="custom-select" v-model="clownA_Post[interv.id]" :id="interv.clownA" @change="findBuddy(clownA_Post[interv.id])">
+                <option class="cartouche" v-for="clown in clownFs" :key="clown.id" :style="{ backgroundColor: clown.couleur }" :value="clown.id">
+                   <span>  <img :src="displayPic(clown.pseudo)"/>
                     {{ clown.pseudo }}
                     {{ isMan(clown.homme) }} 
                     {{ isMusician(clown.musicien) }}</span>
@@ -36,8 +32,8 @@
                 </select>
 		<div style="color:black">Selected: {{ clownB_Post[interv.id] }}</div>
                 <select class="custom-select" v-model="clownB_Post[interv.id]" :id="interv.clownB">
-                <option class="cartouche" v-for="buddy in buddys" :key="buddy.id" :style="{ backgroundColor: buddy.couleur }">
-                   <span :style="{ backgroundColor: buddy.couleur}">  <img :src="displayPic(buddy.pseudo)"/>
+                <option class="cartouche" v-for="buddy in buddys" :key="buddy.id" :style="{ backgroundColor: buddy.couleur }" :value="buddy.id">
+                   <span>  <img :src="displayPic(buddy.pseudo)"/>
                     {{ buddy.pseudo }}
                     {{ isMan(buddy.homme) }}
                     {{ isMusician(buddy.musicien) }}</span>
@@ -71,7 +67,7 @@ import ModalView from '@/components/ModalView.vue'
 import axios from 'axios'
 const ALL_INTERVS_READ_API_URL = "http://localhost:8787/api/allInterv"
 const ALL_CLOWNS_READ_API_URL = "http://localhost:8787/api/allClown"
-const FIND_BUDDY_READ_API_URL = "http://localhost:8787/api/findBuddy"
+//const FIND_BUDDY_READ_API_URL = "http://localhost:8787/api/findBuddy"
 
 export default {
     name: 'PlanningBase',
@@ -80,16 +76,16 @@ export default {
     },
     data: () => ({
         showModal: false,
-        clowns: [],
+       clowns: [],
         clown_id: '',
         clown_pseudo:'',
         intervs:[],
         clownA_Post: {},
         clownB_Post: {},
         buddys: [],
-
-    
-
+        clownFs: [],
+        
+ 
     }),
     methods: {
 
@@ -126,14 +122,34 @@ export default {
         },
         left(date){
             return date.substring(0,10)
-        }
-
-
-    },
+        },
+        findBuddy(param){
+            let bud = this.clowns.filter((clown) => clown.id == param)
+            let buddy = bud[0]
+            console.log(buddy)
+            if (buddy.homme == true && buddy.musicien == false){
+               this.buddys = this.clowns.filter((clown) => clown.homme == false && clown.musicien == true)}
+            if (buddy.homme == false && buddy.musicien == false){
+               this.buddys = this.clowns.filter((clown) => clown.homme == true && clown.musicien == true)}
+            if (buddy.musicien == true){
+                 if (buddy.homme == true){
+               this.buddys = this.clowns.filter((clown) => clown.homme == false)}else{
+               this.buddys = this.clowns.filter((clown) => clown.homme == true)}}
+           
         
-
-    
-  
+            
+            console.log(this.buddys)
+        }
+        ,
+        degeu(param){
+            if (param == 2){
+                this.clownFs = this.clowns.filter((clown) => clown.id>3)
+            // }
+            }else{
+                this.clownFs=this.clowns
+            }
+        }
+    },
 
  
     async created() {
@@ -147,10 +163,10 @@ export default {
         this.clowns = clownsdb.data
         console.log(this.clowns)
 
-        let id = this.clownId
-        const buddydb = await axios.post(FIND_BUDDY_READ_API_URL,id)
-        this.buddys = buddydb.data
-        console.log(this.buddys)
+        // let id = this.clownId
+        // const buddydb = await axios.post(FIND_BUDDY_READ_API_URL,id)
+        // this.buddys = buddydb.data
+        // console.log(this.buddys)
         
     },
 

@@ -2,14 +2,19 @@
     <table class="styled-table">
         <ModalView v-if="showModal" @close="showModal = false" :clownId='clown_id' :clownPseudo='clown_pseudo'/>
 
-        <h3 slot="header">custom header</h3>
+        <h3 slot="header">liste des clowns</h3>
 
+<div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitches1" 
+                  @change="filterByOne()" />
+                <label class="custom-control-label" for="customSwitches1">choix d'un clown</label>
+              </div>
 
         <thead>
            
         </thead>
         <tbody>
-            <tr class="cartouche" v-for="clown in clowns" :key="clown.id" :style="{ backgroundColor: clown.couleur }">
+            <tr class="cartouche" v-for="clown in clowns" :key="clown.id"   :style="{ backgroundColor: clown.couleur }">
                 <td><img class="img" :src="require(`@/assets/static/img/${clown.pseudo}.jpg`)" /></td>
                 <td class="cartouche-info">
                     <h3>{{ clown.pseudo }}</h3>
@@ -18,7 +23,7 @@
                 <td class="cartouche-info">{{ isMusician(clown) }}</td>
 
 
-                <td id="show-modal" style="cursor :pointer" @click="showModal = true ; giveId(clown.id); givePseudo(clown.pseudo)">💬</td>
+                <td id="show-modal" style="cursor :pointer"  @click="showModal = true ; giveId(clown.id); givePseudo(clown.pseudo)">💬</td>
                 <!-- <td style="cursor :pointer" @click="goToFilmDelete(movie.id)">🗑</td>-->
             </tr>
         </tbody>
@@ -73,7 +78,13 @@ export default {
         },
         givePseudo(pseudo){
             this.clown_pseudo = pseudo
-        }
+        },
+
+        filterByOne() {
+     
+        this.clowns = this.clowns.filter((clown) => clown.id == 1)
+       
+    }
 
     },
   
@@ -85,6 +96,7 @@ export default {
         console.log(this.clowns)
     },
 }
+
 
 </script>
 

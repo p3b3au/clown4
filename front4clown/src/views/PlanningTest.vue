@@ -28,7 +28,7 @@
             </tr> -->
         </thead>
         <tbody>
-            <th class="course" v-for="interv in intervs" :Key="interv.id">
+            <th class="course" v-for="interv in intervs" :Key="interv.id" :value="interv.id">
               
                 <td class="course-info">
                     <h3>le {{ left(interv.dateheure) }}</h3>
